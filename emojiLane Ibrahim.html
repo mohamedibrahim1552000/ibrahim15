@@ -1,0 +1,464 @@
+
+<html>
+<head>
+    <style>
+
+      canvas
+      {
+          border:1px solid #d3d3d3;
+          background-color: #800517;
+      }
+    </style>
+  </head>
+
+	
+    <canvas id="myScr" width="200" height="700" style="border:2px solid black" ;=""></canvas>
+	
+    <canvas id="myCan" width="800" height="700" style="border:2px solid black" ;=""></canvas>
+	
+    <script>
+      var c = document.getElementById("myCan");
+      var ctx = c.getContext("2d");
+      var cs = document.getElementById("myScr");
+      var scr = cs.getContext("2d");
+
+      var Score = 0;
+
+      scr.font = "30px Impact";
+      scr.fillStyle = "#FECEA8";
+
+      var playerSpeed = 50;
+
+      var enemtSpeed = 100;
+
+      var playerYPos = 150;
+
+      var timer = 0;
+
+      var speedTimer = 0;
+
+      var leftArrow = false;
+      var rightArrow  = false;
+      var upArrow = false;
+      var downArrow  = false;
+
+      var pauseButton = false;
+
+      document.addEventListener("keydown", moveDown, false);
+      document.addEventListener("keyup", moveUp, false);
+
+      function moveDown(e)
+      {
+        if(e.keyCode=="38")
+        {
+          leftArrow = true;
+        }
+        else if(e.keyCode=="40")
+        {
+          rightArrow = true;
+        }
+        if(e.keyCode == "32")
+        {
+          pauseButton != pauseButton;
+        }
+      }
+
+      function moveUp(q)
+      {
+        if(q.keyCode=="65")
+        {
+          leftArrow = false
+        }
+        else if(q.keyCode=="68")
+        {
+          rightArrow = false;
+        }
+      }
+
+      var x;
+      var y;
+
+      var playGame = false;
+
+      myScr.addEventListener('mousemove', function(e)
+      {
+        x = e.clientX;
+        y = e.clientY;
+      }, false);
+      myScr.addEventListener('click', function(e)
+      {
+        if(e.clientX > 25 && e.clientX < 175 && e.clientY > 570 && e.clientY < 610)
+        {
+          if(playGame == false)
+          {
+            playGame = true;
+            Render();
+          }
+          else
+          {
+            window.location.reload();
+          }
+        }
+      }, false);
+
+      var Laugh = "😂";
+      var Wow = "🤩";
+      var Money = "🤑";
+      var Blessed = "😇";
+	  var TEXT = TEXT;
+
+      var enemyXPos = new Array(0, 0, 0, 0, 0, 0);
+      var enemyYPos = new Array(-100, -300, -500, -700, -900, -1100);
+
+      var exc1 = new Array(0, 0, 0, 0, 0, 0);
+      var exc2 = new Array(0, 0, 0, 0, 0, 0);
+      var exc3 = new Array(0, 0, 0, 0, 0, 0);
+      var exc4 = new Array(0, 0, 0, 0, 0, 0);
+
+      function enemyDraw()
+      {
+        var rand = Math.floor((Math.random() * 4) + 1);
+        exc1[i] = rand;
+
+        do
+        {
+          var rand = Math.floor((Math.random() * 4) + 1);
+        } while (rand == exc1[i]);
+
+        exc2[i] = rand;
+
+        do
+        {
+          var rand = Math.floor((Math.random() * 4) + 1);
+        } while (rand == exc1[i] || rand == exc2[i]);
+
+        exc3[i] = rand;
+
+        do
+        {
+          var rand = Math.floor((Math.random() * 4) + 1);
+        } while (rand == exc1[i] || rand == exc2[i] || rand == exc3[i]);
+
+        exc4[i] = rand;
+      }
+      function enemyRedraw()
+      {
+        if(exc1[i] == 1)
+        {
+          TEXT = Laugh;
+        }
+        else if(exc1[i] == 2)
+        {
+          TEXT = Wow;
+        }
+        else if(exc1[i] == 3)
+        {
+          TEXT = Money;
+        }
+        else if(exc1[i] == 4)
+        {
+          TEXT = Blessed;
+        }
+		ctx.font ="50px Times New Roman";
+
+        ctx.fillText(TEXT,enemyYPos[i],150, 150, 20);
+
+        if(exc2[i] == 1)
+        {
+          TEXT = Laugh;
+        }
+        else if(exc2[i] == 2)
+        {
+          TEXT = Wow;
+        }
+        else if(exc2[i] == 3)
+        {
+          TEXT = Money;
+        }
+        else if(exc2[i] == 4)
+        {
+          TEXT = Blessed;
+        }
+		ctx.font ="50px Times New Roman";
+
+        ctx.fillText(TEXT,enemyYPos[i],300, 150, 20);
+
+        if(exc3[i] == 1)
+        {
+          TEXT = Laugh;
+        }
+        else if(exc3[i] == 2)
+        {
+          TEXT = Wow;
+        }
+        else if(exc3[i] == 3)
+        {
+          TEXT = Money;
+        }
+        else if(exc3[i] == 4)
+        {
+          TEXT = Blessed;
+        }
+		ctx.font ="50px Times New Roman";
+
+        ctx.fillText(TEXT,enemyYPos[i],450, 150, 20);
+
+        if(exc4[i] == 1)
+        {
+          TEXT = Laugh;
+        }
+        else if(exc4[i] == 2)
+        {
+          TEXT = Wow;
+        }
+        else if(exc4[i] == 3)
+        {
+          TEXT = Money;
+        }
+        else if(exc4[i] == 4)
+        {
+          TEXT = Blessed;
+        }
+		ctx.font ="50px Times New Roman";
+        ctx.fillText(TEXT,enemyYPos[i],600, 150, 20);
+      }
+
+      var isGameOver = false;
+
+      function gameOver()
+      {
+        isGameOver = true;
+      }
+
+      function player()
+      {
+        if(playerColor == 1)
+        {
+          TEXT = Laugh;
+        }
+        else if(playerColor == 2)
+        {
+          TEXT = Wow;
+        }
+        else if(playerColor == 3)
+        {
+          TEXT = Money;
+        }
+        else if(playerColor == 4)
+        {
+          TEXT = Blessed;
+        }
+        else
+        {
+          playerColor = 4;
+          TEXT = Blessed;
+        }
+		ctx.font ="50px Times New Roman";
+        ctx.fillText(TEXT,400,playerYPos, 150, 20);
+      }
+
+      var playerColor = 0;
+
+      Render();
+	  
+	  function drawline1()
+	{
+	
+	ctx.beginPath();
+	ctx.moveTo(0,175);
+	ctx.lineTo(800,175);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	ctx.closePath();
+	}
+	  
+	    function drawline2()
+	{
+	
+	ctx.beginPath();
+	ctx.moveTo(0,350);
+	ctx.lineTo(800,350);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	ctx.closePath();
+	}
+	
+	    function drawline3()
+	{
+	
+	ctx.beginPath();
+	ctx.moveTo(0,525);
+	ctx.lineTo(800,525);
+	ctx.strokeStyle="black";
+	ctx.stroke();
+	ctx.closePath();
+	}
+	  
+	      function drawline4()
+	{
+	
+	ctx.beginPath();
+	ctx.moveTo(0,700);
+	ctx.lineTo(800,700);
+	ctx.strokeStyle="black 5px";
+	ctx.stroke();
+	ctx.closePath();
+	}
+	  
+
+      function Render()
+      {
+        ctx.clearRect(0, 0, 800, 800);
+		drawline1();
+		drawline2();
+		drawline3();
+		drawline4();
+
+        if(leftArrow == true)
+        {
+          if(playerYPos == 150)
+          {
+            leftArrow = false;
+          }
+          else
+          {
+            playerYPos -= 150;
+            leftArrow = false;
+          }
+        }
+        if(rightArrow == true)
+        {
+          if(playerYPos == 600)
+          {
+            rightArrow = false;
+          }
+          else
+          {
+            playerYPos += 150;
+            rightArrow = false;
+          }
+        }
+
+        player();
+
+        for(i = 0; i < 6; i++)
+        {
+          if(enemyYPos[i] > 900)
+          {
+            enemyYPos[i] = -300;
+          }
+          if(enemyYPos[i] < -10)
+          {
+            enemyDraw();
+          }
+          enemyRedraw();
+          if(timer >= 1000 && i == 5)
+          {
+            timer = 0;
+            if(enemyXPos[i] == 0)
+            {
+              enemyXPos[i] = 100;
+            }
+            else
+            {
+              enemyXPos[i] = 0;
+            }
+          }
+          enemyYPos[i] += 10;
+          if(enemyYPos[i] == 400)
+          {
+            playerColor = Math.floor((Math.random() * 4) + 1);
+            Score += 1;
+          }
+          if(enemyYPos[i] == 390)
+          {
+            if(playerYPos == 150 && playerColor != exc1[i])
+            {
+              gameOver();
+            }
+            else if(playerYPos == 300 && playerColor != exc2[i])
+            {
+              gameOver();
+            }
+            else if(playerYPos == 450 && playerColor != exc3[i])
+            {
+              gameOver();
+            }
+            else if(playerYPos == 600 && playerColor != exc4[i])
+            {
+              gameOver();
+            }
+          }
+        }
+        if(isGameOver == true)
+        {
+          ctx.font = "90px Impact";
+          ctx.fillStyle = "#FECEA8";
+          ctx.strokeStyle = "#E84A5F";
+          ctx.fillText("GAME OVER", 100, 300);
+          ctx.strokeText("GAME OVER", 100, 300);
+        }
+        else if(playGame == false)
+        {
+
+        }
+        else
+        {
+          setTimeout(Render, 50);
+        }
+      }
+
+      buttonRender();
+
+      function buttonRender()
+      {
+        scr.clearRect(0, 0, 200, 200);
+
+        scr.fillStyle = "yellow";
+        scr.font = "40px Times New Roman";
+        scr.fillText("EMOJI", 10, 300);
+		 scr.fillStyle = "yellow";
+        scr.fillText("LANE", 10, 400);
+        scr.font = "20px Candara";
+		  scr.fillStyle = "#FF847C";
+        scr.fillText("Use arrow keys", 10, 500);
+        scr.fillText("to navigate", 10, 520);
+
+        scr.font = "35px Impact";
+        scr.fillStyle = "#FECEA8";
+        scr.fillText("SCORE : " + Score, 40, 50);
+        if(x > 25 && x < 175 && y > 570 && y < 610)
+        {
+          scr.fillStyle = "#FF847C";
+        }
+        else
+        {
+          scr.fillStyle = "#FECEA8";
+        }
+
+        scr.fillStyle = "#00FFFF";
+        scr.fillRect(25, 570, 150, 40);
+        scr.strokeStyle = "#0000A0";
+        scr.strokeRect(25, 570, 150, 40);
+
+        scr.font = "30px Impact";
+        if(playGame == false)
+        {
+          scr.fillStyle = "purple";
+		 ctx.font = "100px Candara";
+          scr.fillText("Play", 75, 600);
+
+         
+        }
+        else
+        {
+          scr.fillStyle = "purple";
+          scr.fillText("RETRY", 55, 600);
+        }
+        setTimeout(buttonRender, 50)
+      }
+    </script>
+
+
+
+</body></html>
